@@ -1,4 +1,4 @@
-class Polynoumial:
+class Polynomial:
 
     def __init__(self,*c):
 
@@ -17,7 +17,7 @@ class Polynoumial:
             for d, ct in data.items():
                 self.c[d] = ct
 
-        elif len(c) == 1 and isinstance(c[0], Polynoumial):
+        elif len(c) == 1 and isinstance(c[0], Polynomial):
             self.c = c[0].c.copy()
         else: 
             self.c = list(c)
@@ -67,16 +67,16 @@ class Polynoumial:
 
     def __eq__(self,o):
         if isinstance(o, (int, float)):
-            o = Polynoumial(o)
-        if not isinstance(o, Polynoumial):
+            o = Polynomial(o)
+        if not isinstance(o, Polynomial):
             return NotImplemented
         return self.c == o.c
 
     def __add__(self, o):
         if isinstance(o, (int, float)):
-            o = Polynoumial(o)
+            o = Polynomial(o)
 
-        if not isinstance(o, Polynoumial):
+        if not isinstance(o, Polynomial):
             return NotImplemented
 
         result = []
@@ -86,18 +86,18 @@ class Polynoumial:
             b = o.c[d] if d < len(o.c) else 0
             result.append(a + b)
 
-        return Polynoumial(result)
+        return Polynomial(result)
     def __radd__(self,o):
         return self + o
 
     def __neg__(self):
-        return Polynoumial([-ct for ct in self.c])
+        return Polynomial([-ct for ct in self.c])
 
     def __sub__(self, o):
-        return self + (-Polynoumial(o))
+        return self + (-Polynomial(o))
 
     def __rsub__(self, o):
-        return Polynoumial(o) - self
+        return Polynomial(o) - self
 
     def __call__(self,x):
         r = 0
@@ -116,7 +116,7 @@ class Polynoumial:
         while d > o:
 
             if len(c) == 1:
-                return Polynoumial(0)
+                return Polynomial(0)
             
             nc = []
 
@@ -124,18 +124,18 @@ class Polynoumial:
                 nc.append(c[i] * i)
             c = nc 
             o += 1
-        return Polynoumial(c)
+        return Polynomial(c)
 
     def __mul__(self,o):
         if isinstance(o, (int, float)):
-            return Polynoumial([t * o for t in self.c])
-        if not isinstance(o, Polynoumial):
+            return Polynomial([t * o for t in self.c])
+        if not isinstance(o, Polynomial):
             return NotImplemented
         result = [0] * (len(self.c) + len(o.c) - 1)
         for i, a in enumerate(self.c):
             for j, b in enumerate(o.c):
                 result[i + j] += a * b
-        return Polynoumial(result)
+        return Polynomial(result)
     
     def __rmul__(self,o):
         return self * o
@@ -150,4 +150,4 @@ class Polynoumial:
             self.i += 1
             return result 
         else:
-            raise StopIteration
+            return 0
