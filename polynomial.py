@@ -92,13 +92,25 @@ class Polynomial:
 
     def __neg__(self):
         return Polynomial([-ct for ct in self.c])
-
+    
     def __sub__(self, o):
-        return self + (-Polynomial(o))
+        if isinstance(o, (int, float)):
+            o = Polynomial(o)
+
+        if not isinstance(o, Polynomial):
+            return NotImplemented
+
+        return self + (-o)
 
     def __rsub__(self, o):
-        return Polynomial(o) - self
+        if isinstance(o, (int, float)):
+            o = Polynomial(o)
 
+        if not isinstance(o, Polynomial):
+            return NotImplemented
+
+        return o + (-self)
+    
     def __call__(self,x):
         r = 0
         for i, ct in enumerate(self.c):
@@ -150,4 +162,4 @@ class Polynomial:
             self.i += 1
             return result 
         else:
-            return 0
+            raise StopIteration
