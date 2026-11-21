@@ -163,3 +163,7 @@ class Polynomial:
             return result 
         else:
             raise StopIteration
+
+p1 = Polynomial(1,2,3)
+p2 = Polynomial(1,2,3)
+print(p1 == p2)
